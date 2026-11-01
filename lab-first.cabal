@@ -1,0 +1,64 @@
+cabal-version:      3.0
+name:               lab-first
+version:            0.1.0.0
+synopsis:           Haskell laboratory work No. 1 (variant 3)
+description:
+  Solutions to the eight tasks of Haskell laboratory work No. 1:
+  a library with the logic, an interactive program and a test suite.
+license:            NONE
+author:             Jekaterina Racika
+maintainer:         jekaterina.racika@gmail.com
+category:           Education
+build-type:         Simple
+extra-doc-files:    README.md
+
+-- Shared settings: every component is compiled with all warnings on.
+common warnings
+  ghc-options:      -Wall
+  default-language: Haskell2010
+
+-- The logic of all tasks. Pure functions only, no input/output.
+library
+  import:           warnings
+  hs-source-dirs:   src
+  exposed-modules:
+    Lab.Capitalize
+    Lab.Concat
+    Lab.ConcatLaw
+    Lab.MaxNumber
+    Lab.Parse
+    Lab.Quadratic
+    Lab.RemoveAll
+    Lab.ReverseWord
+    Lab.SearchTree
+  build-depends:    base >=4.14 && <5
+
+-- Interactive program: `cabal run lab-first` (menu) or `cabal run lab-first -- 3`.
+executable lab-first
+  import:           warnings
+  hs-source-dirs:   app
+  main-is:          Main.hs
+  build-depends:
+    , base
+    , lab-first
+
+-- Tests: `cabal test`. Exits with code 1 if any test fails.
+test-suite lab-first-test
+  import:           warnings
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  main-is:          Spec.hs
+  other-modules:
+    Lab.CapitalizeSpec
+    Lab.ConcatLawSpec
+    Lab.ConcatSpec
+    Lab.MaxNumberSpec
+    Lab.QuadraticSpec
+    Lab.RemoveAllSpec
+    Lab.ReverseWordSpec
+    Lab.SearchTreeSpec
+  build-depends:
+    , base
+    , hspec       >=2.10 && <3
+    , lab-first
+    , QuickCheck  >=2.14 && <3
